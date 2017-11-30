@@ -6,25 +6,19 @@
   </head>
   <body>
     <div id="app">
-      <form>
-        <span class="error" v-show="!message">
-          You must enter a message
-        </span>
-
-        <textarea v-model="message" name="name" rows="8" cols="80"></textarea>
-
-        <button type="submit" v-if="message">Send</button>
+      <form action="done.html" @submit.prevent="handleIt">
+        <button type="submit">Submit!</button>
       </form>
-
-      <pre>{{ $data | json }}</pre>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue" charset="utf-8"></script>
     <script>
       new Vue({
         el: '#app',
-        data: {
-          message: ''
+        methods: {
+          handleIt: function() {
+            alert('submitted!');
+          }
         }
       });
     </script>
