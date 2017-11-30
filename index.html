@@ -9,25 +9,22 @@
   </head>
   <body>
     <div id="app">
-      <tasks-list :list="tasks"></tasks-list>
+      <tasks-list></tasks-list>
     </div>
 
     <template id="tasks-template">
       <div>
-        <h1>My Tasks
-          <span v-show="remaining">({{ remaining }})</span>
-        </h1>
-        <ul v-if="list.length">
-          <li v-for="(task, index) in list" @click="task.completed = ! task.completed">
-            <span :class="{ 'completed': task.completed }">{{ task.body }}</span>
-            <strong @click="deleteTask(index)">x</strong>
+        <h1>My Tasks</h1>
+        <ul class="list-group">
+          <li class="list-group-item" v-for="(task, index) in list">
+            {{ task.body }}
+            <strong @click="deleteTask(index)">X</strong>
           </li>
         </ul>
-        <p v-else>No tasks yet!</p>
-        <button @click="clearCompleted">Clear Completed</button>
       </div>
     </template>
 
+    <script src="http://code.jquery.com/jquery.js" charset="utf-8"></script>
     <script src="https://unpkg.com/vue@2.5.9/dist/vue.js" charset="utf-8"></script>
     <script src="main.js" charset="utf-8"></script>
   </body>
