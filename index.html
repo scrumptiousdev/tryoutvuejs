@@ -14,18 +14,18 @@
   <body>
     <div id="app">
       <div v-for="plan in plans">
-        <plan :plan="plan" :active="active" @update:active="val => active = val"></plan>
+        <plan :selected-plan="plan" :current-active="active" @update:active="val => active = val"></plan>
       </div>
     </div>
 
     <template id="plan-template">
       <div>
-        <span class="plan__name">{{ plan.name }}</span>
-        <span class="plan__price">{{ plan.price }}/month</span>
-        <button @click="setActivePlan" v-if="plan.name !== active.name">
+        <span class="plan__name">{{ selectedPlan.name }}</span>
+        <span class="plan__price">{{ selectedPlan.price }}/month</span>
+        <button @click="setActivePlan" v-if="selectedPlan.name !== currentActive.name">
           {{ isUpgrade ? 'Upgrade' : 'Downgrade' }}
         </button>
-        <span v-else="plan.name == active.name">
+        <span v-else="selectedPlan.name == currentActive.name">
           Selected
         </span>
       </div>
@@ -47,15 +47,15 @@
         components: {
           plan: {
             template: '#plan-template',
-            props: ['plan', 'active'],
+            props: ['selectedPlan', 'currentActive'],
             computed: {
               isUpgrade: function () {
-                return this.plan.price > this.active.price;
+                return this.selectedPlan.price > this.currentActive.price;
               }
             },
             methods: {
               setActivePlan: function() {
-                this.$emit('update:active', this.plan);
+                this.$emit('update:active', this.selectedPlan);
               }
             }
           }
