@@ -6,22 +6,39 @@
   </head>
   <body>
     <div id="app">
-      <button type="submit" @click="counter++">
-      <!-- <button type="submit" @click="countIt"> -->
-        Increment Counter: {{ counter }}
-      </button>
+      <counter heading="Likes"></counter>
+      <counter heading="Dislikes"></counter>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue" charset="utf-8"></script>
+    <template id="counter-template">
+      <!-- Outer div is needed for v2.0 -->
+      <div>
+        <h1>{{ heading }}</h1>
+        <button @click="count++">{{ count }}</button>
+      </div>
+    </template>
+
+    <script src="https://unpkg.com/vue@2.5.9/dist/vue.js" charset="utf-8"></script>
     <script>
+      // Global component
+      // Vue.component('counter', {
+      //   template: '#counter-template',
+      //   props: ['heading'],
+      //   data: function() {
+      //     return { count: 0 };
+      //   }
+      // });
+
       new Vue({
         el: '#app',
-        data: {
-          counter: 0
-        },
-        methods: {
-          countIt: function() {
-            this.counter++;
+        // Local component
+        components: {
+          counter: {
+            template: '#counter-template',
+            props: ['heading'],
+            data: function() {
+              return { count: 0 };
+            }
           }
         }
       });
