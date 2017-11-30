@@ -6,8 +6,9 @@
   </head>
   <body>
     <div id="app">
-      <h1>Skill: {{ skill }}</h1>
-      <input type="text" v-model="points">
+      <h1>Hello, {{ fullName }}!</h1>
+      <input type="text" v-model="first" placeholder="First Name">
+      <input type="text" v-model="last" placeholder="Last Name">
     </div>
 
     <script src="https://unpkg.com/vue@2.5.9/dist/vue.js" charset="utf-8"></script>
@@ -15,15 +16,16 @@
       new Vue({
         el: '#app',
         data: {
-          points: 200
+          first: 'Ryan',
+          last: 'Choi',
+          fullName: 'Ryan Choi'
         },
-        computed: {
-          skill: function() {
-            if (this.points <= 100) {
-              return 'Beginner';
-            }
-
-            return 'Advanced';
+        watch: {
+          first: function(first) {
+            this.fullName = first + ' ' + this.last;
+          },
+          last: function(last) {
+            this.fullName = this.first + ' ' + last;
           }
         }
       });
