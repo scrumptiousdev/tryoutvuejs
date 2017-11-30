@@ -3,29 +3,61 @@
   <head>
     <meta charset="utf-8">
     <title>Try Out VueJS</title>
+    <style>
+      .plan__name,
+      .plan__price {
+        display: inline-block;
+        width: 80px;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
-      <h1>Hello, {{ fullName }}!</h1>
-      <input type="text" v-model="first" placeholder="First Name">
-      <input type="text" v-model="last" placeholder="Last Name">
+      <div v-for="plan in plans">
+        <plan :plan="plan" :active="active" @update:active="val => active = val"></plan>
+      </div>
     </div>
+
+    <template id="plan-template">
+      <div>
+        <span class="plan__name">{{ plan.name }}</span>
+        <span class="plan__price">{{ plan.price }}/month</span>
+        <button @click="setActivePlan" v-if="plan.name !== active.name">
+          {{ isUpgrade ? 'Upgrade' : 'Downgrade' }}
+        </button>
+        <span v-else="plan.name == active.name">
+          Selected
+        </span>
+      </div>
+    </template>
 
     <script src="https://unpkg.com/vue@2.5.9/dist/vue.js" charset="utf-8"></script>
     <script>
       new Vue({
         el: '#app',
         data: {
-          first: 'Ryan',
-          last: 'Choi',
-          fullName: 'Ryan Choi'
+          plans: [
+            { name: 'Enterprise', price: 100 },
+            { name: 'Pro', price: 50 },
+            { name: 'Personal', price: 10 },
+            { name: 'Free', price: 0 }
+          ],
+          active: { name: 'Free', price: 0 }
         },
-        watch: {
-          first: function(first) {
-            this.fullName = first + ' ' + this.last;
-          },
-          last: function(last) {
-            this.fullName = this.first + ' ' + last;
+        components: {
+          plan: {
+            template: '#plan-template',
+            props: ['plan', 'active'],
+            computed: {
+              isUpgrade: function () {
+                return this.plan.price > this.active.price;
+              }
+            },
+            methods: {
+              setActivePlan: function() {
+                this.$emit('update:active', this.plan);
+              }
+            }
           }
         }
       });
