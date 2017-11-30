@@ -13,11 +13,19 @@
     </div>
 
     <template id="tasks-template">
-      <ul>
-        <li :class="{ 'completed': task.completed }" v-for="task in list" @click="task.completed = ! task.completed">
-          {{ task.body }}
-        </li>
-      </ul>
+      <div>
+        <h1>My Tasks
+          <span v-show="remaining">({{ remaining }})</span>
+        </h1>
+        <ul v-if="list.length">
+          <li v-for="(task, index) in list" @click="task.completed = ! task.completed">
+            <span :class="{ 'completed': task.completed }">{{ task.body }}</span>
+            <strong @click="deleteTask(index)">x</strong>
+          </li>
+        </ul>
+        <p v-else>No tasks yet!</p>
+        <button @click="clearCompleted">Clear Completed</button>
+      </div>
     </template>
 
     <script src="https://unpkg.com/vue@2.5.9/dist/vue.js" charset="utf-8"></script>
