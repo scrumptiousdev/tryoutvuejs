@@ -4,63 +4,19 @@
     <meta charset="utf-8">
     <title>Try Out VueJS</title>
     <style>
-      .plan__name,
-      .plan__price {
-        display: inline-block;
-        width: 80px;
-      }
+      .completed { text-decoration: line-through; }
     </style>
   </head>
   <body>
     <div id="app">
-      <div v-for="plan in plans">
-        <plan :selected-plan="plan" :current-active="active" @update:active="val => active = val"></plan>
-      </div>
+      <ul>
+        <li :class="{ 'completed': task.completed }" v-for="task in tasks" @click="task.completed = ! task.completed">
+          {{ task.body }}
+        </li>
+      </ul>
     </div>
 
-    <template id="plan-template">
-      <div>
-        <span class="plan__name">{{ selectedPlan.name }}</span>
-        <span class="plan__price">{{ selectedPlan.price }}/month</span>
-        <button @click="setActivePlan" v-if="selectedPlan.name !== currentActive.name">
-          {{ isUpgrade ? 'Upgrade' : 'Downgrade' }}
-        </button>
-        <span v-else="selectedPlan.name == currentActive.name">
-          Selected
-        </span>
-      </div>
-    </template>
-
     <script src="https://unpkg.com/vue@2.5.9/dist/vue.js" charset="utf-8"></script>
-    <script>
-      new Vue({
-        el: '#app',
-        data: {
-          plans: [
-            { name: 'Enterprise', price: 100 },
-            { name: 'Pro', price: 50 },
-            { name: 'Personal', price: 10 },
-            { name: 'Free', price: 0 }
-          ],
-          active: { name: 'Free', price: 0 }
-        },
-        components: {
-          plan: {
-            template: '#plan-template',
-            props: ['selectedPlan', 'currentActive'],
-            computed: {
-              isUpgrade: function () {
-                return this.selectedPlan.price > this.currentActive.price;
-              }
-            },
-            methods: {
-              setActivePlan: function() {
-                this.$emit('update:active', this.selectedPlan);
-              }
-            }
-          }
-        }
-      });
-    </script>
+    <script src="main.js" charset="utf-8"></script>
   </body>
 </html>
