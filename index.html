@@ -6,18 +6,22 @@
   </head>
   <body>
     <div id="app">
-      <form action="done.html" @submit.prevent="handleIt">
-        <button type="submit">Submit!</button>
-      </form>
+      <button type="submit" @click="counter++">
+      <!-- <button type="submit" @click="countIt"> -->
+        Increment Counter: {{ counter }}
+      </button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue" charset="utf-8"></script>
     <script>
       new Vue({
         el: '#app',
+        data: {
+          counter: 0
+        },
         methods: {
-          handleIt: function() {
-            alert('submitted!');
+          countIt: function() {
+            this.counter++;
           }
         }
       });
