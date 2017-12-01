@@ -8,22 +8,13 @@
   </head>
   <body>
     <div id="app">
-      <alert type="error">
-        <strong>Warning!</strong> This is too cool.
-      </alert>
-      <alert type="success">
-        <strong>Success!</strong> Your account has been updated.
-      </alert>
+      <ul>
+        <li v-for="person in sortedFilter('admin')">{{ person.name }}</li>
+      </ul>
     </div>
 
-    <template id="alert-template">
-      <div :class="alertClasses" v-show="show">
-        <slot></slot>
-        <span class="alert__close" @click="show = false">x</span>
-      </div>
-    </template>
-
     <script src="http://code.jquery.com/jquery.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/vue@2.5.9/dist/vue.js" charset="utf-8"></script>
     <script src="main.js" charset="utf-8"></script>
   </body>
