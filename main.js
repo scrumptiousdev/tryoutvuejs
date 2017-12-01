@@ -1,6 +1,15 @@
+var alertSystem = {
+  methods: {
+    alertThis: function() {
+      console.log('Great!');
+    }
+  }
+};
+
 new Vue({
   el: '#app',
-  data: {
-    show: true
+  mixins: [alertSystem],
+  created: function() {
+    this.alertThis();
   }
 });
