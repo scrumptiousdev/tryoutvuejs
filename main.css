@@ -1,0 +1,18 @@
+.animating__div {
+  background: grey;
+  height: 50px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .5s ease;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-leave-to {
+  height: 200px;
+  opacity: 0;
+}
