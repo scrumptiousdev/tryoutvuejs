@@ -8,9 +8,17 @@
   </head>
   <body>
     <div id="app">
-      <ul>
-        <li v-for="person in sortedFilter('admin')">{{ person.name }}</li>
-      </ul>
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <message @new-message="handleMessage"></message>
+          </div>
+          <div class="col-8">
+            <p v-for="message in messages">{{ message }}</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <script src="http://code.jquery.com/jquery.js" charset="utf-8"></script>

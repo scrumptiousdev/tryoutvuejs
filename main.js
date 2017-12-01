@@ -1,22 +1,32 @@
+var bus = new Vue();
+
+Vue.component('message', {
+  template: '<input v-model="message" @keyup.enter="storeMessage">',
+  data: function() {
+    return { message: '' };
+  },
+  methods: {
+    storeMessage: function() {
+      bus.$emit('new-message', this.message);
+      this.message = '';
+    }
+  }
+});
+
 new Vue({
   el: '#app',
   data: {
-    people: [
-      { name: 'Ryan', role: 'admin' },
-      { name: 'Jeff', role: 'admin' },
-      { name: 'Chris', role: 'client' },
-      { name: 'Jemma', role: 'user' },
-      { name: 'Gavin', role: 'user' }
-    ]
+    messages: []
   },
   methods: {
-    orderedPerson: function() {
-      return _.sortBy(this.people, 'name');
-    },
-    sortedFilter: function(role) {
-      return this.people.filter(function(person) {
-        return person.role === role;
-      });
+    handleMessage: function(message) {
+      this.messages.push(message);
     }
+  },
+  created: function() {
+    bus.$on('new-message', this.handleMessage);
+  },
+  destroyed: function() {
+    bus.$off('new-message', this.handleMessage);
   }
 });
