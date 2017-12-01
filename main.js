@@ -1,40 +1,23 @@
-Vue.component('tasks-list', {
-  template: '#tasks-template',
-  computed: {
-    remaining: function() {
-      return this.list.filter(this.isProgress).length;
-    }
-  },
+Vue.component('alert', {
+  template: '#alert-template',
+  props: ['type'],
   data: function() {
     return {
-      list: []
+      show: true
     };
   },
-  created: function() {
-    this.fetchTaskList();
-  },
-  methods: {
-    fetchTaskList: function() {
-      var vm = this;
-      $.getJSON('data.json', function(tasks) {
-        vm.list = tasks.data;
-      });
-    },
-    deleteTask: function(key) {
-      Vue.delete(this.list, key);
-    },
-    isCompleted: function(task) {
-      return task.completed;
-    },
-    isProgress: function(task) {
-      return ! this.isCompleted(task);
-    },
-    clearCompleted: function() {
-      this.list = this.list.filter(this.isProgress);
+  computed: {
+    alertClasses: function() {
+      var type = this.type;
+      return {
+        'alert': true,
+        'alert--success': type == 'success',
+        'alert--error': type == 'error'
+      }
     }
   }
 });
 
 new Vue({
   el: '#app'
-})
+});
