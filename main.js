@@ -1,15 +1,7 @@
-var alertSystem = {
-  methods: {
-    alertThis: function() {
-      console.log('Great!');
-    }
-  }
-};
+Vue.component('task', {
+  template: '<li><slot></slot></li>'
+});
 
 new Vue({
-  el: '#app',
-  mixins: [alertSystem],
-  created: function() {
-    this.alertThis();
-  }
+  el: '#app'
 });
