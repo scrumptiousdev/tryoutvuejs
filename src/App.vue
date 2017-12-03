@@ -1,18 +1,22 @@
 <template>
   <div id="app">
-    <counter></counter>
+    <ul>
+      <li v-for="skill in skills">{{ skill.body }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
-import Counter from './components/Counter.vue';
+import axios from 'axios';
 export default {
   name: 'app',
-  components: { Counter },
-  data () {
+  data() {
     return {
-
-    }
+      skills: []
+    };
+  },
+  mounted() {
+    axios.get('/src/assets/data.json').then(res => this.skills = res.data);
   }
 }
 </script>
